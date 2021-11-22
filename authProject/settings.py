@@ -21,10 +21,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-a$sbxk7p)#ok=yf+%_$^_xfo=9ogzaccn#hgadkiyzjpik4(33'
+SECRET_KEY = 'django-insecure-xyu5rfyy7jq=47h%vf9t@q@0w$mp5@!bk@p!t%8=#&(w80-sah'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
+ALLOWED_HOSTS = []
+
 
 # Application definition
 
@@ -37,18 +40,18 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'authApp',
+    'rest_framework_simplejwt.token_blacklist', 
 ]
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
-    'ROTATE_REFRESH_TOKENS': False,
-    'BLACKLIST_AFTER_ROTATION': False,
-    'UPDATE_LAST_LOGIN': False,
-
-    'ALGORITHM': 'HS256',
-    'USER_ID_FIELD': 'id',
-    'USER_ID_CLAIM': 'user_id',
+            'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
+            'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+            'ROTATE_REFRESH_TOKENS': False,
+         'BLACKLIST_AFTER_ROTATION': True,
+            'UPDATE_LAST_LOGIN': False,
+            'ALGORITHM': 'HS256',
+            'USER_ID_FIELD': 'id',
+            'USER_ID_CLAIM': 'user_id',
 }
 
 MIDDLEWARE = [
@@ -62,14 +65,12 @@ MIDDLEWARE = [
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.AllowAny',
-    ),
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
-    'TEST_REQUEST_DEFAULT_FORMAT': 'json'
-
+            'DEFAULT_PERMISSION_CLASSES': (
+                'rest_framework.permissions.AllowAny',
+            ),
+            'DEFAULT_AUTHENTICATION_CLASSES': (
+                'rest_framework_simplejwt.authentication.JWTAuthentication',
+            )
 }
 
 AUTH_USER_MODEL = 'authApp.User'
@@ -111,7 +112,6 @@ DATABASES = {
 }
 
 
-
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
@@ -134,7 +134,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es'
 
 TIME_ZONE = 'UTC'
 
@@ -155,8 +155,5 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
-
 import django_heroku
 django_heroku.settings(locals())
-
