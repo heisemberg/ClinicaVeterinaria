@@ -18,10 +18,10 @@ public class AccountController {
         this.accountRepository = accountRepository;
     }
 
-    @GetMapping("/account/{username}")
-    Account getAccount(@PathVariable String username) throws AccountNotFoundException {
-        return accountRepository.findById(username)
-                .orElseThrow(() -> new AccountNotFoundException("Usuario no encontrado: " + username));
+    @GetMapping("/account/{id}")
+    Account getAccount(@PathVariable String id) throws AccountNotFoundException {
+        return accountRepository.findById(id)
+                .orElseThrow(() -> new AccountNotFoundException("Id de usuario no encontrado: " + id));
     }
 
     @PostMapping("/account")
