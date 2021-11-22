@@ -18,7 +18,7 @@ public class Account {
             Date lastChange) {
         this.idUsuario = idUsuario;
         this.firstName = firstName;
-        this.lastChange = lastChange;
+        this.lastName = lastName;
         this.correo = correo;
         this.telefono = telefono;
         this.lastChange = lastChange;
