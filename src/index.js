@@ -1,6 +1,6 @@
 import express from "express";
 import constants from "./constants";
-import pkg from "./package.json";
+import pkg from "../package.json";
 const app = express();
 
 app.get("/", (req, res) => {
