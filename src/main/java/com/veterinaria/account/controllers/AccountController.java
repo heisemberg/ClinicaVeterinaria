@@ -11,11 +11,18 @@ import javax.security.auth.login.AccountNotFoundException;
 import com.veterinaria.account.models.Account;
 import com.veterinaria.account.repositories.AccountRepository;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class AccountController {
     private final AccountRepository accountRepository;
+
+    @Autowired
+    private MongoOperations mongoOperations;
 
     public AccountController(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
@@ -38,13 +45,13 @@ public class AccountController {
         return accountRepository.findAll();
     }
 
-    @DeleteMapping("/account")
-    Map<String, String> deleteAccount(@PathVariable String idUsuario) {
+    @DeleteMapping("/account/{id}")
+    Map<String, String> deleteAccount(@PathVariable String id) {
         HashMap<String, String> res = new HashMap<String, String>();
-        Optional<Account> exist = accountRepository.findById(idUsuario);
+        Optional<Account> exist = accountRepository.findById(id);
         if (exist.isPresent()) {
             res.put("message", "borrado satisfactoriamente");
-            accountRepository.deleteById(idUsuario);
+            accountRepository.deleteById(id);
             return res;
         }
         res.put("message", "usuario no existe");
@@ -52,8 +59,26 @@ public class AccountController {
     }
 
     @PutMapping("/account/{id}")
-    Map<String, String> updateAccount(@PathVariable String idUsuario) {
+    Map<String, String> updateAccount(@PathVariable String id, @RequestBody Account account) {
         HashMap<String, String> res = new HashMap<String, String>();
+        Query query = new Query();
+
+        query.addCriteria(Criteria.where("idUsuario").is(id));
+        Account accountFounded = mongoOperations.findOne(query, Account.class);
+        if (!account.getFirstName().equals("")) {
+            accountFounded.setFirstName(account.getFirstName());
+        }
+        if (!account.getLastName().equals("")) {
+            accountFounded.setLastName(account.getLastName());
+        }
+        if (!account.getTelefono().equals("")) {
+            accountFounded.setTelefono(account.getTelefono());
+        }
+        if (!account.getCorreo().equals("")) {
+            accountFounded.setCorreo(account.getCorreo());
+        }
+        accountRepository.save(accountFounded);
+
         res.put("message", "actualizado satisfactoriamente");
         return res;
     }
