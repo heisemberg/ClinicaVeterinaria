@@ -39,8 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'authApp',
-    'rest_framework_simplejwt.token_blacklist', 
+    'authApp',    
+    'drf_yasg',
+    'rest_framework_simplejwt.token_blacklist',     
 ]
 
 SIMPLE_JWT = {
@@ -70,7 +71,8 @@ REST_FRAMEWORK = {
             ),
             'DEFAULT_AUTHENTICATION_CLASSES': (
                 'rest_framework_simplejwt.authentication.JWTAuthentication',
-            )
+            ),
+            
 }
 
 AUTH_USER_MODEL = 'authApp.User'
