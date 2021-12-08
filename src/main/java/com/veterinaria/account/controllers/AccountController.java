@@ -77,6 +77,15 @@ public class AccountController {
         if (!account.getCorreo().equals("")) {
             accountFounded.setCorreo(account.getCorreo());
         }
+
+        if (!account.getDireccion().equals("")) {
+            accountFounded.setDireccion(account.getDireccion());
+        }
+
+        if (!account.getTipoDocumento().equals("")) {
+            accountFounded.setTipoDocumento(account.getTipoDocumento());
+        }
+
         accountRepository.save(accountFounded);
 
         res.put("message", "actualizado satisfactoriamente");

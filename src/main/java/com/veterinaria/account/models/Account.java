@@ -12,17 +12,20 @@ public class Account {
     private String lastName;
     private String correo;
     private String telefono;
+    private String tipoDocumento;
+    private String direccion;
     private Date lastChange;
 
     public Account(String idUsuario, String firstName, String lastName, String correo, String telefono,
-            Date lastChange) {
+            Date lastChange, String tipoDocumento, String direccion) {
         this.idUsuario = idUsuario;
         this.firstName = firstName;
         this.lastName = lastName;
         this.correo = correo;
         this.telefono = telefono;
         this.lastChange = lastChange;
-
+        this.tipoDocumento = tipoDocumento;
+        this.direccion = direccion;
     }
 
     public String getIdUsuario() {
@@ -71,6 +74,22 @@ public class Account {
 
     public void setLastChange(Date lastChange) {
         this.lastChange = lastChange;
+    }
+
+    public String getDireccion() {
+        return this.direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getTipoDocumento() {
+        return this.tipoDocumento;
+    }
+
+    public void setTipoDocumento(String tipoDocumento) {
+        this.tipoDocumento = tipoDocumento;
     }
 
 }
