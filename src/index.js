@@ -1,16 +1,23 @@
-import express from "express";
-import constants from "./constants";
-import pkg from "../package.json";
-const app = express();
+const { ApolloServer } = require('apollo-server');
 
-app.get("/", (req, res) => {
-  res.json({
-    author: pkg.author,
-    description: pkg.description,
-    version: pkg.version,
-  });
+const typeDefs = require('./typeDefs');
+const resolvers = require('./resolvers');
+const AccountAPI = require('./dataSources/account_api');
+const AuthAPI = require('./dataSources/auth_api');
+const authentication = require('./utils/authentication');
+
+const server = new ApolloServer({
+    context: authentication,
+    typeDefs,
+    resolvers,
+    dataSources: () => ({
+        accountAPI: new AccountAPI(),
+        authAPI: new AuthAPI(),
+    }),
+    introspection: true,
+    playground: true
 });
 
-app.listen(constants.port, () => {
-  console.log(`Listening on port ${constants.port}`);
+server.listen(process.env.PORT || 4000).then(({ url }) => {
+    console.log(`🚀  Server ready at ${url}`);
 });
